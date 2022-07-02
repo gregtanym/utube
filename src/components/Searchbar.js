@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import {AiOutlineSearch} from 'react-icons/ai'
+import { FaMicrophone } from 'react-icons/fa';
 import { useGlobalContext } from '../context'
 
 const Searchbar = () => {
@@ -12,9 +13,10 @@ const Searchbar = () => {
     }
     return (
         <div className='searchbar'>
-            <form>
+            <form style={{height: '100%'}}>
                 <input className='searchbar-input' type="search" placeholder="Search" aria-label="Search" ref={searchValue} onChange={quickSearchVideos}/>
-                <button className='searchbar-submit' type="submit"><AiOutlineSearch/></button>
+                <button className='searchbar-submit' type="submit"><AiOutlineSearch size={25} /></button>
+                <FaMicrophone color='white' size={20}/>
             </form>
         </div>
     )
