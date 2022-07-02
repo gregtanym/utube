@@ -1,13 +1,12 @@
 import Feed from "./components/Feed";
-import Searchbar from "./components/Searchbar";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <div>
-      <div>
-        sidebar
-      </div>
-      <Searchbar/>
+    <div className="homepage-container">
+      <Header/>
+      <Sidebar/>
       <Feed/>
     </div>
   );
