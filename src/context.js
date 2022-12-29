@@ -4,8 +4,11 @@ const AppContext = React.createContext()
 
 const AppProvider = (({children}) => {
     const [videos, setVideos] = useState([])
+    const [showDropdown, setShowDropdown] = useState(false)
     const [quicksearch, setQuicksearch] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
+    const [uploadedVideo, setUploadedVideo] = useState([])
+    const [singleVideoDetails, setSingleVideoDetails] = useState([])
 
     // for getting all videos 
     const fetchAllVideos = async () => {
@@ -14,11 +17,14 @@ const AppProvider = (({children}) => {
         const data =  await response.json()
         if(data){
             const newVideos = data.map((video) => {
-                const {id,title,file} = video
+                const {id,title,file,thumbnail, views, create_at} = video
                 return {
                     id: id,
                     title: title,
-                    video: file
+                    thumbnail: thumbnail,
+                    video: file,
+                    views: views,
+                    create_at: create_at
                 }
             })
             setVideos(newVideos)
@@ -28,10 +34,12 @@ const AppProvider = (({children}) => {
         }
     }
 
-    useEffect(() => {
-        fetchAllVideos();
-        console.log(videos)
-    },[])
+    // useEffect(() => {
+    //     fetchAllVideos();
+    //     // console.log(videos)
+    // },[])
+
+
 
     // for filtering videos based on search input 
     const fetchVideoTitles = async () => {
@@ -40,7 +48,7 @@ const AppProvider = (({children}) => {
             'http://127.0.0.1:8000/utube/video/list', {
                 method: 'POST',
                 body: JSON.stringify({
-                    title: {searchTerm}
+                    title: searchTerm
                 }),
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
@@ -62,10 +70,13 @@ const AppProvider = (({children}) => {
             setQuicksearch([])
         }
     }
-    useEffect(() => {
-        fetchVideoTitles();
-        // Quicksearch should be a list of titles at this point
-    },[searchTerm])
+    // useEffect(() => {
+    //     fetchVideoTitles();
+    //     searchTerm ? setShowDropdown(true) : setShowDropdown(false)
+    //     // Quicksearch should be a list of titles at this point
+    // },[searchTerm])
+
+
 
     // get final search results
     const fetchFilteredVideos = async () => {
@@ -74,21 +85,24 @@ const AppProvider = (({children}) => {
             'http://127.0.0.1:8000/utube/video/list', {
                 method: 'POST',
                 body: JSON.stringify({
-                    title: {searchTerm}
+                    title: searchTerm
                 }),
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
                 }
-            }
+            }   
         )
         const data =  await response.json()
         if(data){
             const filteredVideos = data.map((video) => {
-                const {id,title,file} = video
+                const {id,title,file,thumbnail, views, create_at} = video
                 return {
                     id: id,
                     title: title,
-                    video: file
+                    thumbnail: thumbnail,
+                    video: file,
+                    views: views,
+                    create_at: create_at
                 }
             })
             setVideos(filteredVideos)
@@ -98,11 +112,29 @@ const AppProvider = (({children}) => {
         }
     }
 
+    const fetchSingleVideo = async (id) => {
+        try {
+            console.log('fetchSingleVideo called')
+            const response = await fetch(`http://127.0.0.1:8000/utube/video/${id}`)
+            const data =  await response.json()
+            if(data){
+                setSingleVideoDetails(data)
+            }
+            else{
+                console.log('data not found')
+                setSingleVideoDetails({})
+            }
+        }
+        catch(error){
+            alert(error)
+        }
+    }
+
     return(
         <AppContext.Provider value={
             {
-                videos, quicksearch,
-                setVideos, setSearchTerm, fetchFilteredVideos
+                videos, quicksearch, searchTerm, showDropdown, uploadedVideo, singleVideoDetails,
+                setVideos, setQuicksearch, setSearchTerm, fetchFilteredVideos, setShowDropdown, setUploadedVideo, fetchSingleVideo, setSingleVideoDetails, fetchAllVideos, fetchVideoTitles,
             }
         }>
             {children}
