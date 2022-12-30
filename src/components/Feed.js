@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useGlobalContext } from '../context'
 import { Link, useNavigate } from 'react-router-dom';
+import HoverVideoPlayer from 'react-hover-video-player';
 
 
 const Feed = () => {
@@ -28,16 +29,29 @@ const Feed = () => {
     console.log(videos)
     return (
         <div className='feed-container'>
+
             {videos.map((video) => {
                 const created_date = new Date(video.create_at)
                 return(
                     <div className='feed-video-card' key={video.id}>
                         <div className='feed-video-card-inner'>
-                            <Link to={`/${video.id}`} style={{textDecoration: 'none', width: '100%', color: 'white'}}>
-                                <img className='feed-thumbnail' src={`http://127.0.0.1:8000${video.thumbnail}`}/>
-                                {/* <div className="embed-responsive embed-responsive-16by4">
-                                    <iframe className="embed-responsive-item" src={`http://127.0.0.1:8000${video.video}`} allowFullScreen></iframe>
-                                </div> */}
+                            <Link to={`/${video.id}`} style={{textDecoration: 'none', width: '100%', color: 'white', position:'relative'}}>
+                                <HoverVideoPlayer
+                                videoClassName='feed-thumbnail-video'
+                                videoSrc={`http://127.0.0.1:8000${video.video}`}
+                                playbackStartDelay={1000}
+                                pausedOverlay={
+                                    <img
+                                        className='feed-thumbnail'
+                                        src={`http://127.0.0.1:8000${video.thumbnail}`}
+                                    />
+                                }
+                                loadingOverlay={
+                                    <div className='loading-overlay'>
+                                        <div className='loading-spinner'/>
+                                    </div>
+                                }
+                                />
                                 <div className='feed-video-card-title'>{video.title}</div>
                                 <div className='feed-video-card-views-container'>
                                     <div>{video.views} views</div>

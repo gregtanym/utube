@@ -206,6 +206,12 @@ input[type=search] {
     border-radius: 3%;
 }
 
+.feed-thumbnail-video{
+    width: 100%;
+    height: 10rem;
+    border-radius: 3%;
+}
+
 .feed-video-card-views-container{
     display: flex;
     flex-direction: row;
