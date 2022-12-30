@@ -1,9 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useGlobalContext } from '../context'
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Feed = () => {
     const {videos, setVideos, fetchAllVideos} = useGlobalContext()
+
+    const get_time_diff = (earlier_time) => {
+        const current_date = new Date()
+        if ((current_date.getFullYear() - earlier_time.getFullYear())>0){
+            return <div>{current_date.getFullYear() - earlier_time.getFullYear()} years ago</div>
+        }
+        else if(((current_date.getMonth()) - (earlier_time.getMonth())) > 0){
+            return <div>{(current_date.getMonth()) - (earlier_time.getMonth())} months ago</div>
+        }
+        else if((current_date.getDate() - earlier_time.getDate()) > 0){
+            return <div>{current_date.getDate() - earlier_time.getDate()} days ago</div>
+        }
+        else{
+            return <div>Less than a day ago</div>
+        }
+    }
 
     useEffect(() => {
         fetchAllVideos();
@@ -12,18 +29,21 @@ const Feed = () => {
     return (
         <div className='feed-container'>
             {videos.map((video) => {
+                const created_date = new Date(video.create_at)
                 return(
                     <div className='feed-video-card' key={video.id}>
                         <div className='feed-video-card-inner'>
-                            <img className='feed-thumbnail' src={`http://127.0.0.1:8000${video.thumbnail}`}/>
-                            {/* <div className="embed-responsive embed-responsive-16by4">
-                                <iframe className="embed-responsive-item" src={`http://127.0.0.1:8000${video.video}`} allowFullScreen></iframe>
-                            </div> */}
-                            <div className='feed-video-card-title'>{video.title}</div>
-                            <div className='feed-video-card-views-container'>
-                                <div>{video.views} views</div>
-                                <div>{video.create_at}</div>
-                            </div>
+                            <Link to={`/${video.id}`} style={{textDecoration: 'none', width: '100%', color: 'white'}}>
+                                <img className='feed-thumbnail' src={`http://127.0.0.1:8000${video.thumbnail}`}/>
+                                {/* <div className="embed-responsive embed-responsive-16by4">
+                                    <iframe className="embed-responsive-item" src={`http://127.0.0.1:8000${video.video}`} allowFullScreen></iframe>
+                                </div> */}
+                                <div className='feed-video-card-title'>{video.title}</div>
+                                <div className='feed-video-card-views-container'>
+                                    <div>{video.views} views</div>
+                                    {get_time_diff(created_date)}
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 )

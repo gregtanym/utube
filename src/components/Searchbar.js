@@ -5,8 +5,7 @@ import { FaMicrophone } from 'react-icons/fa';
 import { useGlobalContext } from '../context'
 
 const Searchbar = () => {
-    const searchValue = useRef('')
-    const {searchTerm, setSearchTerm, showDropdown, setShowDropdown, quicksearch, fetchFilteredVideos, fetchVideoTitles} = useGlobalContext()
+    const {searchTerm, setSearchTerm, showDropdown, setShowDropdown, quicksearch, fetchFilteredVideos, fetchVideoTitles, searchValue} = useGlobalContext()
     const navigate = useNavigate()
 
     const quickSearchVideos = () => {

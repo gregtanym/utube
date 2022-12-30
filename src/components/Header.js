@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Searchbar from './Searchbar';
 import { AiOutlineMenu, AiFillYoutube } from 'react-icons/ai';
 import { RiVideoUploadLine, RiAccountCircleFill } from 'react-icons/ri';
@@ -11,6 +11,7 @@ import DragDropFile from './DragDropFile';
 import { useGlobalContext } from '../context';
 import { TextField, FormControl, Select, MenuItem } from '@mui/material';
 import axios from "axios";
+import { Link, useNavigate } from 'react-router-dom';
 import nothumbnail from '../media/nothumbnail.jpg'
 
 
@@ -161,12 +162,27 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const {searchTerm, setSearchTerm, fetchFilteredVideos, searchValue, isHomeClicked, setIsHomeClicked} = useGlobalContext()
+  const navigate = useNavigate()
 
+  const onclick = () =>{
+      setSearchTerm('')
+      searchValue.current.value = ''
+        // ishomeclicked is just a switch to trigger fetchfilteredvideos. the boolean value does not matter coz i am only looking out of its change of state
+      setIsHomeClicked(!isHomeClicked)
+  }
+
+  useEffect(()=>{
+    fetchFilteredVideos()
+  }, [isHomeClicked])
   return (
     <div className='header-container'>
         <div className='header-container-left'>
             <AiOutlineMenu color='white' size={25}/>
-            <AiFillYoutube color='red' size={25}/>
+            {/* <AiFillYoutube color='red' size={25}/> */}
+            <Link to='/' style={{textDecoration: 'none', display: 'flex', alignItems: 'center'}} onClick={onclick}>
+              <AiFillYoutube color='red' size={25}/>
+            </Link>
         </div>
 
         <div className='header-container-center'>

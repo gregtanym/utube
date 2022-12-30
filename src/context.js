@@ -1,14 +1,17 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState, useRef } from "react"
 
 const AppContext = React.createContext()
 
 const AppProvider = (({children}) => {
+    const searchValue = useRef('')
+
     const [videos, setVideos] = useState([])
     const [showDropdown, setShowDropdown] = useState(false)
     const [quicksearch, setQuicksearch] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
     const [uploadedVideo, setUploadedVideo] = useState([])
     const [singleVideoDetails, setSingleVideoDetails] = useState([])
+    const [isHomeClicked, setIsHomeClicked] = useState(false)
 
     // for getting all videos 
     const fetchAllVideos = async () => {
@@ -133,8 +136,8 @@ const AppProvider = (({children}) => {
     return(
         <AppContext.Provider value={
             {
-                videos, quicksearch, searchTerm, showDropdown, uploadedVideo, singleVideoDetails,
-                setVideos, setQuicksearch, setSearchTerm, fetchFilteredVideos, setShowDropdown, setUploadedVideo, fetchSingleVideo, setSingleVideoDetails, fetchAllVideos, fetchVideoTitles,
+                videos, quicksearch, searchTerm, showDropdown, uploadedVideo, singleVideoDetails, isHomeClicked, searchValue,
+                setVideos, setQuicksearch, setSearchTerm, fetchFilteredVideos, setShowDropdown, setUploadedVideo, fetchSingleVideo, setSingleVideoDetails, fetchAllVideos, fetchVideoTitles, setIsHomeClicked
             }
         }>
             {children}
