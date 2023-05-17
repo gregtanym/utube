@@ -162,7 +162,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const {searchTerm, setSearchTerm, fetchFilteredVideos, searchValue, isHomeClicked, setIsHomeClicked} = useGlobalContext()
+  const {searchTerm, setSearchTerm, fetchFilteredVideos, searchValue, isHomeClicked, setIsHomeClicked, setShowDropdown} = useGlobalContext()
   const navigate = useNavigate()
 
   const onclick = () =>{
@@ -174,6 +174,7 @@ const Header = () => {
 
   useEffect(()=>{
     fetchFilteredVideos()
+    setShowDropdown(false)
   }, [isHomeClicked])
   return (
     <div className='header-container'>
@@ -198,7 +199,7 @@ const Header = () => {
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              {UploadFormHandler()}
+              <UploadFormHandler/>
             </Modal>
             <IoMdNotificationsOutline color='white' size={25}/>
             <RiAccountCircleFill color='white' size={25}/>

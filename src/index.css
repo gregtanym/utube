@@ -330,3 +330,53 @@ input[type=search] {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     cursor: pointer;
 }
+
+/* reccomended video styling */
+.recco-container {
+    width: 40%;
+}
+
+.recco-video-card {
+    padding: 0.5rem 2rem;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+}
+
+.recco-video-card-inner{
+    cursor: pointer;
+}
+
+.recco-thumbnail{
+    width: 13rem;
+    height: 7rem;
+    border-radius: 3%;
+}
+
+.recco-thumbnail-video{
+    width: 100%;
+    height: 7rem;
+    border-radius: 3%;
+}
+
+.recco-video-card-desc-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.recco-video-card-views-container{
+    margin: 0 1rem ;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.recco-video-card-title{
+    margin: 0 1rem ;
+    font-size: large;
+    font-weight: 600;
+}
+
+.hover-video-player {
+    width: 13rem;
+}

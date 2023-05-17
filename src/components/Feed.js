@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { useGlobalContext } from '../context'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import HoverVideoPlayer from 'react-hover-video-player';
 
+export const get_time_diff = (earlier_time) => {
+    const current_date = new Date()
+    if ((current_date.getFullYear() - earlier_time.getFullYear())>0){
+        return <div>{current_date.getFullYear() - earlier_time.getFullYear()} years ago</div>
+    }
+    else if(((current_date.getMonth()) - (earlier_time.getMonth())) > 0){
+        return <div>{(current_date.getMonth()) - (earlier_time.getMonth())} months ago</div>
+    }
+    else if((current_date.getDate() - earlier_time.getDate()) > 0){
+        return <div>{current_date.getDate() - earlier_time.getDate()} days ago</div>
+    }
+    else{
+        return <div>Less than a day ago</div>
+    }
+}
 
 const Feed = () => {
     const {videos, setVideos, fetchAllVideos} = useGlobalContext()
-
-    const get_time_diff = (earlier_time) => {
-        const current_date = new Date()
-        if ((current_date.getFullYear() - earlier_time.getFullYear())>0){
-            return <div>{current_date.getFullYear() - earlier_time.getFullYear()} years ago</div>
-        }
-        else if(((current_date.getMonth()) - (earlier_time.getMonth())) > 0){
-            return <div>{(current_date.getMonth()) - (earlier_time.getMonth())} months ago</div>
-        }
-        else if((current_date.getDate() - earlier_time.getDate()) > 0){
-            return <div>{current_date.getDate() - earlier_time.getDate()} days ago</div>
-        }
-        else{
-            return <div>Less than a day ago</div>
-        }
-    }
+    
 
     useEffect(() => {
-        fetchAllVideos();
+        fetchAllVideos()
     },[])
     console.log(videos)
     return (
@@ -39,7 +39,7 @@ const Feed = () => {
                                 <HoverVideoPlayer
                                 videoClassName='feed-thumbnail-video'
                                 videoSrc={`http://127.0.0.1:8000${video.video}`}
-                                playbackStartDelay={1000}
+                                playbackStartDelay={500}
                                 pausedOverlay={
                                     <img
                                         className='feed-thumbnail'

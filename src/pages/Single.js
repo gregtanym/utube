@@ -2,20 +2,24 @@ import React, { useEffect, useState } from 'react'
 import { useGlobalContext } from '../context'
 import { useParams } from 'react-router-dom'
 import Header from '../components/Header'
+import ReccomendedVids from '../components/ReccomendedVids'
 import ReadMoreReadLess from '../components/ReadMoreReadLess'
 
 const Single = () => {
 
-    const {fetchSingleVideo, singleVideoDetails, setSingleVideoDetails} = useGlobalContext()
+    const {fetchSingleVideo, singleVideoDetails, setSingleVideoDetails, setShowDropdown} = useGlobalContext()
     const [isReadMoreShown, setReadMoreShown] = useState(false)
     const {id} = useParams()
+    // let {id} = useParams()
+    // const [currentVidId, setCurrentVidId] = useState(null)
     // useeffect is used here to prevent the website from re rendering when we are changing the state which would cause an infinite loop
     useEffect(()=>{
         const load = async () =>{
             await fetchSingleVideo(id)
         }
+        setShowDropdown(false)
         load()
-    }, [])
+    }, [id])
 
     const toggleButton = () => {
         setReadMoreShown(!isReadMoreShown)
@@ -62,9 +66,7 @@ const Single = () => {
                     comments section
                 </div>
             </div>
-            <div className='recc-video-container'>
-                reccomended videos
-            </div>
+            <ReccomendedVids/>
         </div>
     </div>
     
