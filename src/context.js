@@ -12,6 +12,8 @@ const AppProvider = (({children}) => {
     const [uploadedVideo, setUploadedVideo] = useState([])
     const [singleVideoDetails, setSingleVideoDetails] = useState([])
     const [isHomeClicked, setIsHomeClicked] = useState(false)
+    const [sidebarStatus, setSidebarStatus] = useState(false)
+    const [initialSidebarState, setInitialSidebarState] = useState(false)
 
     // for getting all videos 
     const fetchAllVideos = async () => {
@@ -134,11 +136,21 @@ const AppProvider = (({children}) => {
         }
     }
 
+    // toggle sidebar, triggers change for initial sidebar state from false to true and then does not change initial state again (to prevent slide out animation on page load)
+    const toggleSidebar = () => {
+        setSidebarStatus(!sidebarStatus)
+
+        if(!initialSidebarState) {
+            setInitialSidebarState(true)
+        } 
+    }
+
     return(
         <AppContext.Provider value={
             {
-                videos, quicksearch, searchTerm, showDropdown, uploadedVideo, singleVideoDetails, isHomeClicked, searchValue,
-                setVideos, setQuicksearch, setSearchTerm, fetchFilteredVideos, setShowDropdown, setUploadedVideo, fetchSingleVideo, setSingleVideoDetails, fetchAllVideos, fetchVideoTitles, setIsHomeClicked
+                videos, quicksearch, searchTerm, showDropdown, uploadedVideo, singleVideoDetails, isHomeClicked, searchValue, sidebarStatus, initialSidebarState,
+                setVideos, setQuicksearch, setSearchTerm, setShowDropdown, setUploadedVideo, setSingleVideoDetails, setIsHomeClicked, setSidebarStatus, setInitialSidebarState,
+                fetchAllVideos, fetchVideoTitles, fetchSingleVideo, fetchFilteredVideos, toggleSidebar,
             }
         }>
             {children}

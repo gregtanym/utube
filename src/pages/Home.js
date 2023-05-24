@@ -1,14 +1,19 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Feed from '../components/Feed'
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import { useGlobalContext } from '../context';
 
 const Home = () => {
+  const {initialSidebarState, setInitialSidebarState} = useGlobalContext()
+
+  useEffect(() => {
+    setInitialSidebarState(false)
+  }, [])
   return (
     <div className="homepage-container">
       <Header/>
-      <Sidebar/>
+      {initialSidebarState && <Sidebar/>}
       <Feed/>
     </div>
   )

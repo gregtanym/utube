@@ -162,14 +162,16 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const {searchTerm, setSearchTerm, fetchFilteredVideos, searchValue, isHomeClicked, setIsHomeClicked, setShowDropdown} = useGlobalContext()
+  const {searchTerm, setSearchTerm, fetchFilteredVideos, searchValue, isHomeClicked, setIsHomeClicked, setShowDropdown, toggleSidebar, setSidebarStatus, setInitialSidebarState} = useGlobalContext()
   const navigate = useNavigate()
 
-  const onclick = () =>{
+  const onClick = () =>{
       setSearchTerm('')
       searchValue.current.value = ''
         // ishomeclicked is just a switch to trigger fetchfilteredvideos. the boolean value does not matter coz i am only looking out of its change of state
       setIsHomeClicked(!isHomeClicked)
+      setSidebarStatus(false)
+      setInitialSidebarState(false)
   }
 
   useEffect(()=>{
@@ -179,9 +181,9 @@ const Header = () => {
   return (
     <div className='header-container'>
         <div className='header-container-left'>
-            <AiOutlineMenu color='white' size={25}/>
+            <AiOutlineMenu color='white' size={25} onClick={toggleSidebar}/>
             {/* <AiFillYoutube color='red' size={25}/> */}
-            <Link to='/' style={{textDecoration: 'none', display: 'flex', alignItems: 'center'}} onClick={onclick}>
+            <Link to='/' style={{textDecoration: 'none', display: 'flex', alignItems: 'center'}} onClick={onClick}>
               <AiFillYoutube color='red' size={25}/>
             </Link>
         </div>

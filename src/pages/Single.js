@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useGlobalContext } from '../context'
 import { useParams } from 'react-router-dom'
 import Header from '../components/Header'
+import Sidebar from "../components/Sidebar";
 import ReccomendedVids from '../components/ReccomendedVids'
 import ReadMoreReadLess from '../components/ReadMoreReadLess'
 
 const Single = () => {
 
-    const {fetchSingleVideo, singleVideoDetails, setSingleVideoDetails, setShowDropdown} = useGlobalContext()
+    const {fetchSingleVideo, singleVideoDetails, setSingleVideoDetails, setShowDropdown, sidebarStatus, setSidebarStatus, initialSidebarState, toggleSidebar, setInitialSidebarState} = useGlobalContext()
     const [isReadMoreShown, setReadMoreShown] = useState(false)
     const {id} = useParams()
     // let {id} = useParams()
@@ -17,6 +18,7 @@ const Single = () => {
         const load = async () =>{
             await fetchSingleVideo(id)
         }
+        setInitialSidebarState(false)
         setShowDropdown(false)
         load()
     }, [id])
@@ -41,12 +43,15 @@ const Single = () => {
             // console.log("TypeError: Cannot read properties of undefined (reading 'substring')")
             return
         }
-        
     }
+
+
 
   return (
     <div>
         <Header/>
+        {initialSidebarState && <Sidebar/>}
+        {sidebarStatus && <div className='overlay' onClick={toggleSidebar}/>}
         <div className='single-container'>
             <div className='single-video-container'>
                 {/* had to specifically define height of video component because min-height attribute cannot be inherited by the children divs */}

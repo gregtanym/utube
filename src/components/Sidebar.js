@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../context'
 
 const Sidebar = () => {
-    const {searchTerm, setSearchTerm, fetchFilteredVideos, searchValue, isHomeClicked, setIsHomeClicked} = useGlobalContext()
+    const {searchTerm, setSearchTerm, fetchFilteredVideos, searchValue, isHomeClicked, setIsHomeClicked, sidebarStatus, setSidebarStatus} = useGlobalContext()
     const navigate = useNavigate()
 
     const onclick = () =>{
@@ -15,6 +15,7 @@ const Sidebar = () => {
         searchValue.current.value = ''
         // ishomeclicked is just a switch to trigger fetchfilteredvideos. the boolean value does not matter coz i am only looking out of its change of state
         setIsHomeClicked(!isHomeClicked)
+        setSidebarStatus(false)
     }
 
     useEffect(()=>{
@@ -22,7 +23,7 @@ const Sidebar = () => {
     }, [isHomeClicked])
 
   return (
-    <div className='sidebar-container'>
+    <div className={`sidebar-container ${sidebarStatus ? 'slide-in' : 'slide-out'}`}>
         <Link to='/' style={{textDecoration: 'none', width: '100%', color: 'white'}} onClick={onclick}>
             <div className='sidebar-item-container'>
                 <div className='sidebar-icon'>
