@@ -20,13 +20,13 @@ export const get_time_diff = (earlier_time) => {
 }
 
 const Feed = () => {
-    const {videos, setVideos, fetchAllVideos} = useGlobalContext()
+    const {videos, setVideos, fetchAllVideos, fetchFilteredVideos} = useGlobalContext()
     
 
     useEffect(() => {
-        fetchAllVideos()
+        fetchFilteredVideos()
     },[])
-    console.log(videos)
+    // console.log(videos)
     return (
         <div className='feed-container'>
 
@@ -34,8 +34,8 @@ const Feed = () => {
                 const created_date = new Date(video.create_at)
                 return(
                     <div className='feed-video-card' key={video.id}>
-                        <div className='feed-video-card-inner'>
-                            <Link to={`/${video.id}`} style={{textDecoration: 'none', width: '100%', color: 'white', position:'relative'}}>
+                        <Link to={`/${video.id}`} style={{textDecoration: 'none', width: '100%', color: 'white', position:'relative'}}>
+                            <div className='feed-video-card-inner'>
                                 <HoverVideoPlayer
                                 videoClassName='feed-thumbnail-video'
                                 videoSrc={`http://127.0.0.1:8000${video.video}`}
@@ -57,8 +57,8 @@ const Feed = () => {
                                     <div>{video.views} views</div>
                                     {get_time_diff(created_date)}
                                 </div>
-                            </Link>
-                        </div>
+                            </div>
+                        </Link>
                     </div>
                 )
             })}

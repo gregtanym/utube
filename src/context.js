@@ -84,6 +84,7 @@ const AppProvider = (({children}) => {
     // get final search results
     const fetchFilteredVideos = async () => {
         console.log('fetchFilteredVideos called')
+        console.log("THIS IS SEARCH TERM: ", searchTerm)
         const response = await fetch(
             'http://127.0.0.1:8000/utube/video/list', {
                 method: 'POST',
